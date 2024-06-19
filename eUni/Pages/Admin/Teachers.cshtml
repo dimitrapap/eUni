@@ -1,0 +1,55 @@
+﻿@page
+@model eUni.Pages.Admin.TeachersModel
+@{
+}
+
+<h2>@Localizer["Teachers"]</h2>
+
+<div class="row mb-3">
+    <div class="col">
+        @*  <a class='btn btn-primary' href='/Admin/Books/Create'>New Book</a> *@
+    </div>
+    <div class="col">
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" name="search" value="@Model.Search" placeholder="Search by Registration Number, Name or Last Name">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Localizer["AM"]</th>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["LastName"]</th>
+                <th>@Localizer["Action"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TeachersInfoList)
+            {
+                <tr>
+                    <td>@item.RegistrationNumber</td>
+                    <td>@item.Name</td>
+                    <td>@item.LastName</td>
+                    <td style="white-space:nowrap">
+                        <a class="btn btn-primary btn-sm" href="/Admin/EditTeachers?id=@item.TeachersId">@Localizer["Edit"]</a>
+                        @* <a class="btn btn-danger btn-sm" href="/Admin/Books/Delete?id=@item.Id">Delete</a> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+            }
+
+        </ul>
+    </nav>
+</div>

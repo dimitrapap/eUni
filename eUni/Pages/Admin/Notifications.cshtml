@@ -1,0 +1,80 @@
+﻿@page
+@using eUni.Models
+@model NotificationsModel
+@{
+}
+
+<h2>@Localizer["Notifications"]</h2>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Localizer["id"]</th>
+                <th>@Localizer["applicant"]</th>
+                <th>@Localizer["type"]</th>
+                <th>@Localizer["date"]</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.NotificationsList.Count; i++)
+            {
+                @if (!Model.NotificationsList[i].Completed)
+                {
+                    <tr>
+                        <td>@Model.NotificationsList[i].NotificationId</td>
+                        <td>@Model.NotificationsList[i].ApplicantsRN</td>
+                        <td>
+                            @if (Model.NotificationsList[i].Type == ReportsEnum.BebaiwsiPeratwsisSpoudwn)
+                            {
+                                @Localizer["BebaiwsiPeratwsisSpoudwn"]
+                            }
+                            else if (Model.NotificationsList[i].Type == ReportsEnum.BebaiwsiSpoudwn)
+                            {
+                                @Localizer["BebaiwsiSpoudwn"]
+                            }
+                            else if (Model.NotificationsList[i].Type == ReportsEnum.AnalytikiBathmologia)
+                            {
+                                @Localizer["AnalytikiBathmologia"]
+                            }
+
+                        </td>
+                        <td>@Model.NotificationsList[i].CreatedOn</td>
+                        <td>
+
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="row mb-3">
+                                    <div class="col-sm-6">
+                                        <input type="file" id="File" name="File">
+                                        <input type="hidden" name="ApplicantsRN" value="@Model.NotificationsList[i].ApplicantsRN"/>
+                                        <input type="hidden" name="NotificationId" value="@Model.NotificationsList[i].NotificationId" />
+                                        <input type="hidden" name="Type" value="@Model.NotificationsList[i].Type" />
+                                        <input type="hidden" name="CreatedOn" value="@Model.NotificationsList[i].CreatedOn" />
+                                    </div>
+                                    <button type="submit" class="col-sm-3 btn btn-primary">@Localizer["Upload"]</button>
+                                </div>
+
+                            </form>
+                        </td>
+                    </tr>
+                }
+                        
+            }
+                    
+                
+                
+            
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+            }
+
+        </ul>
+    </nav>
+</div>

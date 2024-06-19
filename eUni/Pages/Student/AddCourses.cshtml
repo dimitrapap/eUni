@@ -1,0 +1,55 @@
+﻿@page
+@model eUni.Pages.Student.AddCoursesModel
+@{
+}
+
+<h2>@Localizer["AddCourses"]</h2>
+
+<form method="POST" enctype="multipart/form-data">
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>@Localizer["Title"]</th>
+                <th>@Localizer["CodeCourse"]</th>
+                <th>@Localizer["Semester"]</th>
+                <th>@Localizer["CourseType"]</th>
+                <th>@Localizer["Credits"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(var i=0; i<Model.CoursesList.Count;i++)
+            {
+                <tr>
+                    <td>
+                            <input type="hidden" asp-for="CoursesList[i].CourseId" />
+                            <input asp-for="CoursesList[i].Checked" />
+                    </td>
+                    <td>@Model.CoursesList[i].Title</td>
+                    <td>@Model.CoursesList[i].CodeCourse</td>
+                    <td>@Model.CoursesList[i].Semester</td>
+                    <td>@Model.CoursesList[i].CourseType</td>
+                    <td>@Model.CoursesList[i].Credits</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+            }
+
+        </ul>
+    </nav>
+</div>
+
+<div class="row mb-3">
+    <div class="offset-sm-3 col-sm-3 d-grid">
+        <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+    </div>
+</div>
+</form>

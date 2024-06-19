@@ -1,0 +1,140 @@
+﻿@page
+@model eUni.Pages.AttachmentsModel
+@{
+}
+<style>
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        height:80%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+<script>
+
+    function showAttach(filename){
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+        document.getElementById("embed").src = "files/" + filename.toString();
+    }
+
+    function hide() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    // // When the user clicks anywhere outside of the modal, close it
+    // window.onclick = function(event) {
+    //   if (event.target == modal) {
+    //     modal.style.display = "none";
+    //   }
+    // }
+</script>
+
+<h2>@Localizer["Attachments"]</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+        <strong>@Model.errorMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+else if (Model.successMessage.Length > 0)
+{
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        <strong>@Model.successMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+
+@if(Model.Role != "Mathitis")
+{
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <input class="form-control" asp-for="File" />
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+            <button type="submit" class="col-sm-3 btn btn-primary">@Localizer["Upload"]</button>
+        </div>
+
+    </form>
+}
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close" onclick="hide()">&times;</span>
+        <div>
+            <embed src="" type="application/pdf" width="1240" height="520" id="embed"/>
+        </div>
+    </div>
+
+</div>
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["ContentType"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AttachmentsList)
+            {
+                <tr>
+                    <td><a href="#" onclick="showAttach('@item.FileName')">@item.Name</a></td>
+                    <td>@item.ContentType</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+            }
+
+        </ul>
+    </nav>
+</div>

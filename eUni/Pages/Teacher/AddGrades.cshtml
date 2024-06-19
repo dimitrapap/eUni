@@ -1,0 +1,54 @@
+﻿@page
+@model eUni.Pages.Teacher.AddGradesModel
+@{
+}
+
+<h2>@Localizer["Grades"]</h2>
+
+<form method="POST" enctype="multipart/form-data">
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Localizer["Name"]</th>
+                <th>@Localizer["LastName"]</th>
+                <th>@Localizer["RegistrationNumber"]</th>
+                <th>@Localizer["Grade"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.StudentsInfoList.Count; i++)
+            {
+                if (Model.DilwmenaMathimata[i].Grade == null || Model.DilwmenaMathimata[i].Grade < 5)
+                {
+                    <tr>
+                        <td>@Model.StudentsInfoList[i].Name</td>
+                        <td>@Model.StudentsInfoList[i].LastName</td>
+                        <td>@Model.StudentsInfoList[i].RegistrationNumber</td>
+                        <td>
+                            <input type="hidden" asp-for="@Model.DilwmenaMathimata[i].StudentsUserId" />
+                            <input asp-for="@Model.DilwmenaMathimata[i].Grade" />
+                        </td>
+                    </tr>
+                }         
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+            }
+
+        </ul>
+    </nav>
+</div>
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+        </div>
+    </div>
+</form>

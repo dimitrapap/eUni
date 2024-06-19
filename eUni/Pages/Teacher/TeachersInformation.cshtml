@@ -1,0 +1,185 @@
+﻿@page
+@model eUni.Pages.Teacher.TeachersInformationModel
+@{
+}
+
+<script>
+    function enableEdit(){
+        var name = document.getElementById("Name");
+        name.removeAttribute("disabled");
+
+        var LastName = document.getElementById("LastName");
+        LastName.removeAttribute("disabled");
+
+        var FathersName = document.getElementById("FathersName");
+        FathersName.removeAttribute("disabled");
+
+        var MothersName = document.getElementById("MothersName");
+        MothersName.removeAttribute("disabled");
+
+        var Email = document.getElementById("Email");
+        Email.removeAttribute("disabled");
+
+        var PhoneNumber = document.getElementById("PhoneNumber");
+        PhoneNumber.removeAttribute("disabled");
+
+        var YearOfAdmission = document.getElementById("YearOfAdmission");
+        YearOfAdmission.removeAttribute("disabled");
+
+        var Department = document.getElementById("Department");
+        Department.removeAttribute("disabled");
+
+        var NumberOfCourses = document.getElementById("NumberOfCourses");
+        NumberOfCourses.removeAttribute("disabled");
+
+        var x = document.getElementById("buttonsDiv");
+        if (x.style.display === "none") {
+            x.style.display = "flex";
+        }
+    }
+
+    function cancel() {
+        document.getElementById("Name").disabled = true;
+        document.getElementById("LastName").disabled = true;
+        document.getElementById("FathersName").disabled = true;
+        document.getElementById("MothersName").disabled = true;
+        document.getElementById("Email").disabled = true;
+        document.getElementById("PhoneNumber").disabled = true;
+        document.getElementById("YearOfAdmission").disabled = true;
+        document.getElementById("Department").disabled = true;
+        document.getElementById("NumberOfCourses").disabled = true;
+
+        var x = document.getElementById("buttonsDiv");
+        if (x.style.display === "flex") {
+            x.style.display = "none";
+        }
+    }
+</script>
+
+<h2 class="my-3">@Localizer["Information"]</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+        <strong>@Model.errorMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+else if (Model.successMessage.Length > 0)
+{
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        <strong>@Model.successMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+
+<div class="row mb-3">
+    <div class="offset-sm-3 col-sm-3 d-grid">
+        <button type="button" class="btn btn-primary" onclick="enableEdit()">@Localizer["Edit"]</button>
+    </div>
+</div>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["TeachersId"]</label>
+        <div class="col-sm-6">
+            <input readonly type="text" class="form-control-plaintext" asp-for="TeachersId">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["Name"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="Name" id="Name" disabled>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["LastName"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="LastName" id="LastName" disabled>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["FathersName"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="FathersName" id="FathersName" disabled>
+            <span asp-validation-for="FathersName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["MothersName"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="MothersName" id="MothersName" disabled>
+            <span asp-validation-for="MothersName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["Email"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="Email" id="Email" disabled>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["PhoneNumber"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="PhoneNumber" id="PhoneNumber" disabled>
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["RegistrationNumber"]</label>
+        <div class="col-sm-6">
+            <input readonly type="text" class="form-control-plaintext" asp-for="RegistrationNumber">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["YearOfAdmission"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="YearOfAdmission" id="YearOfAdmission" disabled>
+            <span asp-validation-for="YearOfAdmission" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["Department"]</label>
+        <div class="col-sm-6">
+            <select class="form-select" asp-for="Department" id="Department" disabled>
+                <option value='Τμήμα Πληροφορικής'>Τμήμα Πληροφορικής</option>
+                <option value='Τμήμα Οικονομικής Επιστήμης'>Τμήμα Οικονομικής Επιστήμης</option>
+                <option value='Τμήμα Βιολογίας'>Τμήμα Βιολογίας</option>
+                <option value='Τμήμα Μαθηματικών'>Τμήμα Μαθηματικών</option>
+                <option value='Τμήμα Διοίκησης Επιχειρήσεων'>Τμήμα Διοίκησης Επιχειρήσεων</option>
+            </select>
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["NumberOfCourses"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="NumberOfCourses" id="NumberOfCourses" disabled>
+            <span asp-validation-for="NumberOfCourses" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3" id="buttonsDiv" style="display:none;">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <button type="button" class="btn btn-primary" onclick="cancel()" style="background-color: white;color: #0d6efd;">
+                @Localizer["Cancel"]
+            </button>
+        </div>
+    </div>
+</form>

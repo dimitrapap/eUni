@@ -1,0 +1,210 @@
+﻿@page
+@using eUni.Models
+@model eUni.Pages.Student.RequestsModel
+@{
+}
+<style>
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+    /* Modal Content1 */
+    .modal-content1 {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        height: 80%;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 40%;
+        height: 30%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+<script>
+
+    function showAttach(filename) {
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+        document.getElementById("embed").src = "../files/Applications/" + filename.toString() + ".pdf";
+    }
+
+    function showNewRequest(){
+        var modal = document.getElementById("newRequestModal");
+        modal.style.display = "block";
+    }
+
+    function hideNewRequest(){
+        var modal = document.getElementById("newRequestModal");
+        modal.style.display = "none";
+    }
+
+    function hide() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+</script>
+
+<h2>@Localizer["Applications"]</h2>
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+        <strong>@Model.errorMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+else if (Model.successMessage.Length > 0)
+{
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        <strong>@Model.successMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+
+<a class="btn btn-primary" href="#" onclick="showNewRequest()">@Localizer["NewRequest"]</a>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content1">
+        <span class="close" onclick="hide()">&times;</span>
+        <div>
+            <embed src="" type="application/pdf" width="1240" height="520" id="embed" />
+        </div>
+    </div>
+
+</div>
+
+<!-- The request Modal -->
+<div id="newRequestModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close" onclick="hideNewRequest()">&times;</span>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="requestReport">@Localizer["Choose"]:</label>
+            <select name="requestReport" id="requestReport">
+                <option value="@ReportsEnum.BebaiwsiPeratwsisSpoudwn">@Localizer["BebaiwsiPeratwsisSpoudwn"]</option>
+                <option value="@ReportsEnum.BebaiwsiSpoudwn">@Localizer["BebaiwsiSpoudwn"]</option>
+                <option value="@ReportsEnum.AnalytikiBathmologia">@Localizer["AnalytikiBathmologia"]</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Localizer["id"]</th>
+                <th>@Localizer["applicant"]</th>
+                <th>@Localizer["type"]</th>
+                <th>@Localizer["date"]</th>
+                <th>@Localizer["Status"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.NotificationsList)
+            {
+                <tr>
+                        <td>@item.NotificationId</td>
+                        <td>@item.ApplicantsRN</td>
+                        <td>
+                        @if (item.Completed)
+                        {
+                            <a href="#" onclick="showAttach('@item.Type' + '_' + '@item.NotificationId' + '_' + '@item.ApplicantsRN')">
+                                @if (item.Type == ReportsEnum.BebaiwsiPeratwsisSpoudwn)
+                                {
+                                    @Localizer["BebaiwsiPeratwsisSpoudwn"]
+                                }
+                                else if (item.Type == ReportsEnum.BebaiwsiSpoudwn)
+                                {
+                                    @Localizer["BebaiwsiSpoudwn"]
+                                }
+                                else if (item.Type == ReportsEnum.AnalytikiBathmologia)
+                                {
+                                    @Localizer["AnalytikiBathmologia"]
+                                }
+                            </a>
+                        }
+                        else
+                        {
+                            @if (item.Type == ReportsEnum.BebaiwsiPeratwsisSpoudwn)
+                            {
+                                @Localizer["BebaiwsiPeratwsisSpoudwn"]
+                            }
+                            else if (item.Type == ReportsEnum.BebaiwsiSpoudwn)
+                            {
+                                @Localizer["BebaiwsiSpoudwn"]
+                            }
+                            else if (item.Type == ReportsEnum.AnalytikiBathmologia)
+                            {
+                                @Localizer["AnalytikiBathmologia"]
+                            }
+                        }                       
+                        </td>
+                        <td>@item.CreatedOn</td>
+                        <td>
+                        @if (item.Completed)
+                        {
+                            <span style="color:green">@Localizer["Completed"]</span>
+                        }
+                        else
+                        {
+                            <span style="color:blue">@Localizer["InProgress"]</span>
+                        }
+                    </td>
+                    </tr>
+
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+            }
+
+        </ul>
+    </nav>
+</div>

@@ -1,0 +1,65 @@
+﻿@page
+@model eUni.Pages.CourseDetailsModel
+@{
+}
+
+<h2>@Model.Course.Title</h2>
+
+<div>
+    @Model.Course.CourseDetails
+</div>
+<div class="mb-4"></div>
+<div class="row">
+    <div class="col-4">
+<div>Διδάσκον: @Model.Teacher.Name @Model.Teacher.LastName</div>
+<div>Κωδικός Μαθήματος: @Model.Course.CodeCourse</div>
+<div>Τμήμα: @Model.Course.Department</div>
+<div>Εξάμηνο: @Model.Course.Semester</div>
+<div>Τύπος ΜαΘήματος: @Model.Course.CourseType</div>
+<div>Βάση επιτυχίας μαθήματος: @Model.Course.Base</div>
+<div>Πιστωτικές Μονάδες: @Model.Course.Credits</div>
+        <div class="mb-4"></div>
+        <a class="btn btn-primary" href="/Attachments?role=@Model.Role&id=@Model.Course.CourseId">@Localizer["Attachments"]</a>
+    </div>
+    <div class="col-8">
+
+        <h2>@Localizer["Announcements"]</h2>
+        @if(Model.Role != "Mathitis")
+        {
+            <a class="btn btn-primary" href="/Admin/CreateAnnouncement?id=@Model.Course.CourseId">@Localizer["NewAnnouncement"]</a>
+            <a class="btn btn-primary" href="/Teacher/AddGrades?id=@Model.Course.CourseId">@Localizer["Grades"]</a>
+        }
+        
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Localizer["Title"]</th>
+                        <th>@Localizer["Content"]</th>
+                        <th>@Localizer["Ημερομηνία Δημιουργίας"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.AnnouncementsList)
+                    {
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.Content</td>
+                            <td>@item.CreatedOn</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @for (int i = 1; i <= Model.totalPages; i++)
+                    {
+                        <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+                    }
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@page
+@model AnnouncementsModel
+@{
+}
+
+<h2>@Localizer["Announcements"]</h2>
+
+@if(Model.Role == "Grammateia")
+{
+    <a class="btn btn-primary" href="/Admin/CreateAnnouncement">@Localizer["NewAnnouncement"]</a>
+}
+
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Localizer["Title"]</th>
+                <th>@Localizer["Content"]</th>
+                <th>@Localizer["Date"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.AnnouncementsList){
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Content</td>
+                    <td>@item.CreatedOn</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+            }
+
+        </ul>
+    </nav>
+</div>

@@ -1,0 +1,52 @@
+﻿@page
+@model eUni.Pages.Student.GradesModel
+@{
+}
+
+<h2>@Localizer["Grades"]</h2>
+
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Localizer["Title"]</th>
+                    <th>@Localizer["CodeCourse"]</th>
+                    <th>@Localizer["Semester"]</th>
+                    <th>@Localizer["CourseType"]</th>
+                    <th>@Localizer["Credits"]</th>
+                    <th>@Localizer["Grade"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.CoursesList.Count; i++)
+                {
+                    <tr>
+                        <td>@Model.CoursesList[i].Title</td>
+                        <td>@Model.CoursesList[i].CodeCourse</td>
+                        <td>@Model.CoursesList[i].Semester</td>
+                        <td>@Model.CoursesList[i].CourseType</td>
+                        <td>@Model.CoursesList[i].Credits</td>
+                        <td>@Model.DilwmenaMathimata[i].Grade</td>
+                    </tr>
+                }
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>@Localizer["Total"]: @Model.CreditsTotal</td>
+                    <td>@Localizer["Average"]: @Model.GradeAverage</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.totalPages; i++)
+                {
+                    <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+                }
+
+            </ul>
+        </nav>
+</div>

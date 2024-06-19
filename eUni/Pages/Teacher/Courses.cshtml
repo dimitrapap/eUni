@@ -1,0 +1,34 @@
+﻿@page
+@model eUni.Pages.Teacher.CoursesModel
+@{
+}
+
+<h2>@Localizer["Courses"]</h2>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Localizer["Title"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CoursesList)
+            {
+                <tr>
+                    <td><a href="/CourseDetails?role=@Model.Role&id=@item.CourseId">@item.Title</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.totalPages; i++)
+            {
+                <li class="page-item"><a class="page-link" href="?page=@(i)">@i</a></li>
+            }
+
+        </ul>
+    </nav>
+</div>

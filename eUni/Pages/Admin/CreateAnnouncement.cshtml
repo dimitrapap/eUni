@@ -1,0 +1,52 @@
+﻿@page
+@model CreateAnnouncementModel
+@{
+}
+
+<h2>@Localizer["NewAnnouncement"]</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+        <strong>@Model.errorMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+else if (Model.successMessage.Length > 0)
+{
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        <strong>@Model.successMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">@Localizer["Title"]</label>
+        <div class="col-sm-6">
+            <input class="form-control" asp-for="Title" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Content</label>
+        <div class="col-sm-6">
+            <textarea class="form-control" asp-for="AnnouncementContent"></textarea>
+            <span asp-validation-for="AnnouncementContent" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <button type="button" class="btn btn-outline-primary" onclick="history.back()">@Localizer["Cancel"]]</button>
+        </div>
+        @* <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="" role="button" onclick="history.back()">@Localizer["Cancel"]</a>
+        </div> *@
+    </div>
+
+</form>

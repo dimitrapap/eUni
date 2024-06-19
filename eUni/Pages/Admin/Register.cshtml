@@ -1,0 +1,190 @@
+﻿@page
+@model eUni.Pages.Admin.RegisterModel
+@{
+}
+<script>
+	function studentTeacherCheck(that) {
+		if (that.value == "Kathigitis") {
+			document.getElementById("teacher").style.display = "block";
+			document.getElementById("student").style.display = "none";
+			document.getElementById("student1").style.display = "none";
+		} 
+		else {
+			document.getElementById("student").style.display = "block";
+			document.getElementById("student1").style.display = "block";
+			document.getElementById("teacher").style.display = "none";
+		}
+	}
+</script>
+
+<div class="row">
+	<div class="col-lg-8 mx-auto">
+		<div class="card">
+			<div class="card-body">
+				<h2 class="text-center mb-5">@Localizer["Register"]</h2>
+
+				@if (Model.errorMessage.Length > 0)
+				{
+					<div class='alert alert-warning alert-dismissible fade show' role='alert'>
+						<strong>@Model.errorMessage</strong>
+						<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+					</div>
+				}
+				else if (Model.successMessage.Length > 0)
+				{
+					<div class='alert alert-success alert-dismissible fade show' role='alert'>
+						<strong>@Model.successMessage</strong>
+						<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+					</div>
+				}
+
+				<form method="post">
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["Name"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="Firstname">
+							<span asp-validation-for="Firstname" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["LastName"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="Lastname">
+							<span asp-validation-for="Lastname" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["FathersName"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="FathersName">
+							<span asp-validation-for="FathersName" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["MothersName"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="MothersName">
+							<span asp-validation-for="MothersName" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["Email"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="Email">
+							<span asp-validation-for="Email" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["PhoneNumber"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="Phone">
+							<span asp-validation-for="Phone" class="text-danger"></span>
+						</div>
+					</div> 
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["RegistrationNumber"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="RegistrationNumber">
+							<span asp-validation-for="RegistrationNumber" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["Role"]</label>
+						<div class="col-sm-8">
+							<select class="form-select" asp-for="Role" onchange="studentTeacherCheck(this)">
+								<option value='Kathigitis'>@Localizer["Teacher"]</option>
+								<option value='Mathitis'>@Localizer["Student"]</option>
+							</select>
+							<span asp-validation-for="Role" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["YearOfAdmission"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="YearOfAdmission">
+							<span asp-validation-for="YearOfAdmission" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div id="student" style="display:none;">
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["CurrentSemester"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="CurrentSemester">
+							<span asp-validation-for="CurrentSemester" class="text-danger"></span>
+						</div>
+					</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["Department"]</label>
+						<div class="col-sm-8">
+							<select class="form-select" asp-for="Department">
+								<option value='Τμήμα Πληροφορικής'>Τμήμα Πληροφορικής</option>
+								<option value='Τμήμα Οικονομικής Επιστήμης'>Τμήμα Οικονομικής Επιστήμης</option>
+								<option value='Τμήμα Βιολογίας'>Τμήμα Βιολογίας</option>
+								<option value='Τμήμα Μαθηματικών'>Τμήμα Μαθηματικών</option>
+								<option value='Τμήμα Διοίκησης Επιχειρήσεων'>Τμήμα Διοίκησης Επιχειρήσεων</option>
+							</select>
+							<span asp-validation-for="Department" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div id="student1" style="display:none;">
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["Specialization"]</label>
+						<div class="col-sm-8">
+							<textarea class="form-control" asp-for="Specialization"></textarea>
+							<span asp-validation-for="Specialization" class="text-danger"></span>
+						</div>
+					</div>
+					</div>
+
+					<div id="teacher">
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["NumberOfCourses"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" asp-for="NumberOfCourses">
+							<span asp-validation-for="NumberOfCourses" class="text-danger"></span>
+						</div>
+					</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["Password"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="password" asp-for="Password">
+							<span asp-validation-for="Password" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-4 col-form-label">@Localizer["PasswordConfirmation"]</label>
+						<div class="col-sm-8">
+							<input class="form-control" type="password" asp-for="ConfirmPassword">
+							<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<div class="offset-sm-4 col-sm-4 d-grid">
+							<button type="submit" class="btn btn-primary">@Localizer["RegisterBtn"]</button>
+						</div>
+						<div class="col-sm-4 d-grid">
+							<a class="btn btn-outline-primary" href="/" role="button">@Localizer["Cancel"]</a>
+						</div>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
