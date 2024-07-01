@@ -63,7 +63,7 @@ namespace eUni.Pages.Admin
                     string sql = "SELECT * FROM Students";
                     if (Search.Length > 0)
                     {
-                        sqlCount += " WHERE RegistrationNumber LIKE @search OR Name LIKE @search OR LastName LIKE @search";
+                        sql += " WHERE RegistrationNumber LIKE @search OR Name LIKE @search OR LastName LIKE @search";
                     }
                     sql += " ORDER BY LastName ASC";
                     sql += " OFFSET @skip ROWS FETCH NEXT @pageSize ROWS ONLY";

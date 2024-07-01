@@ -127,11 +127,12 @@ namespace eUni.Pages.Student
                         bool exists = false;
                         if (item.Checked)
                         {
-                            string sqlExists = "SELECT CourseId FROM DilwmenaCourses WHERE CourseId = @CourseId";
+                            string sqlExists = "SELECT CourseId FROM DilwmenaCourses WHERE CourseId = @CourseId and StudentsUserId = @userId";
 
                             using (SqlCommand command = new SqlCommand(sqlExists, connection))
                             {
                                 command.Parameters.AddWithValue("@CourseId", item.CourseId);
+                                command.Parameters.AddWithValue("@UserId", userId);
 
                                 using (SqlDataReader reader = command.ExecuteReader())
                                 {
@@ -148,12 +149,13 @@ namespace eUni.Pages.Student
                             {
                                 string sql = "INSERT INTO DilwmenaCourses " +
                                                                             "VALUES " +
-                                                                            "(@StudentsUserId, @CourseId);";
+                                                                            "(@StudentsUserId, @CourseId, @grade);";
 
                                 using (SqlCommand command1 = new SqlCommand(sql, connection))
                                 {
                                     command1.Parameters.AddWithValue("@StudentsUserId", userId);
                                     command1.Parameters.AddWithValue("@CourseId", item.CourseId);
+                                    command1.Parameters.AddWithValue("@grade", 0);
 
                                     command1.ExecuteNonQuery();
                                 }
